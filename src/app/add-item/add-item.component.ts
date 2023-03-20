@@ -37,10 +37,10 @@ export class AddItemComponent implements OnInit {
   ) {
     this.mode = 'Add';
     this.scopes = [
-      { id: 1, img: '../assets/jav.png' },
-      { id: 1, img: '../assets/jav.png' },
-      { id: 1, img: '../assets/jav.png' },
-      { id: 1, img: '../assets/jav.png' }
+      { id: 1, img: 'assets/jav.png' },
+      { id: 1, img: 'assets/jav.png' },
+      { id: 1, img: 'assets/jav.png' },
+      { id: 1, img: 'assets/jav.png' }
     ];
     this.inscModel = [null, null, null, null];
     this.inscVals = [null, null, null, null];
@@ -92,8 +92,11 @@ export class AddItemComponent implements OnInit {
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      map(term => term.length < 2 ? []
+      map(term => {
+        console.log(this.items)
+        return term.length < 2 ? []
         : this.items.filter(v => v.text.toLowerCase().indexOf(term.toLowerCase()) > -1)
+      }
       )
     )
 
@@ -110,7 +113,7 @@ export class AddItemComponent implements OnInit {
 
   setScope(i: number, scope: number) {
     this.scopes[i].id = scope;
-    this.scopes[i].img = (this.scopes[i].id === 0) ? '../assets/gear.png' : '../assets/jav.png';
+    this.scopes[i].img = (this.scopes[i].id === 0) ? 'assets/gear.png' : 'assets/jav.png';
   }
   toggleScope(i: number) {
     this.setScope(i, this.scopes[i].id ? 0 : 1);
