@@ -3,23 +3,23 @@ import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
 import { environment } from 'src/environments/environment';
 import { DatabaseService } from './database.service';
-import Secrets from '../../secrets.json';
+// import Secrets from '../../secrets.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private secrets: any = Secrets;
+  // private secrets: any = Secrets;
 
-  auth0 = new auth0.WebAuth({
-    clientID: this.secrets.clientID,
-    domain: this.secrets.domain,
-    responseType: 'token id_token',
-    redirectUri: environment.callback_url,
-    scope: 'openid email',
-    audience: environment.rest_api,
-    prompt: 'none',
-  });
+  // auth0 = new auth0.WebAuth({
+  //   clientID: this.secrets.clientID,
+  //   domain: this.secrets.domain,
+  //   responseType: 'token id_token',
+  //   redirectUri: environment.callback_url,
+  //   scope: 'openid email',
+  //   audience: environment.rest_api,
+  //   prompt: 'none',
+  // });
 
   constructor(
     public router: Router,
@@ -40,22 +40,22 @@ export class AuthService {
   }
 
   public login(): void {
-    this.auth0.authorize();
+    // this.auth0.authorize();
   }
 
   public handleAuthentication(): void {
-    this.auth0.parseHash((err, authResult) => {
-      // console.log(authResult);
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        window.location.hash = '';
-        this.setSession(authResult);
-        this.db.initDb(true); // re-init the saved item database after login
-        this.router.navigate(['/']);
-      } else if (err) {
-        this.router.navigate(['/']);
-        console.log(err);
-      }
-    });
+    // this.auth0.parseHash((err, authResult) => {
+    //   // console.log(authResult);
+    //   if (authResult && authResult.accessToken && authResult.idToken) {
+    //     window.location.hash = '';
+    //     this.setSession(authResult);
+    //     this.db.initDb(true); // re-init the saved item database after login
+    //     this.router.navigate(['/']);
+    //   } else if (err) {
+    //     this.router.navigate(['/']);
+    //     console.log(err);
+    //   }
+    // });
   }
 
   private setSession(authResult): void {
@@ -70,14 +70,14 @@ export class AuthService {
 
 
   public renewTokens(): void {
-    this.auth0.checkSession({}, (err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-      } else if (err) {
-        alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
-        this.logout();
-      }
-    });
+    // this.auth0.checkSession({}, (err, authResult) => {
+    //   if (authResult && authResult.accessToken && authResult.idToken) {
+    //     this.setSession(authResult);
+    //   } else if (err) {
+    //     alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
+    //     this.logout();
+    //   }
+    // });
   }
 
   public logout(): void {
