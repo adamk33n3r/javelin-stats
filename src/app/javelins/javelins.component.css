@@ -5,3 +5,9 @@
 .btn-warning {
   background-color: #E3B04C;
 }
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -195,6 +195,13 @@ export class JavelinService {
   public getLink(jav: BehaviorSubject<CompactJavelin>): Observable<string> {
     const myJav = this.compressOne(jav.value);
     myJav.slot = 0;
+    return of(jsurl.stringify(myJav)).pipe(
+      map(result => {
+        const url = (location.href + '?build=' + result);
+        this.copyStringToClipboard(url);
+        return url;
+      })
+    );
     return this.http.post<string>(environment.rest_api + '/build_link', { 'build': jsurl.stringify(myJav) }, httpOptions).pipe(
       map(result => {
         const url = environment.base_href + '?id=' + result['id'];

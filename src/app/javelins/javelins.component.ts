@@ -26,11 +26,13 @@ export class JavelinsComponent implements OnInit {
 
   ngOnInit() {
     this.slot = 0;
+    this.inventory = false;
+
+    this.javelins = this.javelinService.javelins.value;
     this.javelinService.parseUrl().subscribe(c => {
       this.class = c;
       this.jav.next(this.javelins[this.class][this.slot]);
     });
-    this.inventory = false;
 
     this.javelinService.javelins.subscribe(j => {
       this.javelins = j;
@@ -45,6 +47,14 @@ export class JavelinsComponent implements OnInit {
     this.slot = slot;
     this.inventory = false;
     this.jav.next(this.javelins[c][slot]);
+  }
+
+  import(slot: number) {
+    this.slot = slot;
+    this.javelins[this.class][this.slot] = this.javelins[this.class][0];
+    this.javelinService.save(this.javelins);
+    window.history.replaceState({}, document.title, window.location.pathname);
+    this.onSelect(this.class, this.slot);
   }
 
   addItem(type: string) {
